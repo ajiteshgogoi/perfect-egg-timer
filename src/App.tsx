@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 type Temperature = 'Fridge' | 'Room';
 type Size = 'Small' | 'Medium' | 'Large';
@@ -15,7 +15,6 @@ const App: React.FC = () => {
     Hard: 10
   };
 
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [isCooking, setIsCooking] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showBoilConfirm, setShowBoilConfirm] = useState(false);
@@ -23,6 +22,32 @@ const App: React.FC = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
   const alarmAudioRef = useRef<HTMLAudioElement | null>(null);
+  const startTimeRef = useRef<number>(0);
+  const remainingTimeRef = useRef<number>(0);
+  const animationFrameRef = useRef<number>(0);
+
+  const workerRef = useRef<Worker>();
+
+  useEffect(() => {
+    workerRef.current = new Worker(new URL('./timer.worker.ts', import.meta.url));
+    workerRef.current.onmessage = (e) => {
+      if (e.data.done) {
+        setIsCooking(false);
+        setShowAlarm(true);
+        if (!alarmAudioRef.current) {
+          alarmAudioRef.current = new Audio('/alarm.mp3');
+          alarmAudioRef.current.loop = true;
+        }
+        alarmAudioRef.current.play();
+      } else {
+        setTime(e.data.time);
+      }
+    };
+
+    return () => {
+      workerRef.current?.terminate();
+    };
+  }, []);
 
   const startTimer = () => {
     setShowBoilConfirm(true);
@@ -30,32 +55,14 @@ const App: React.FC = () => {
 
   const confirmBoil = () => {
     setShowBoilConfirm(false);
-    if (intervalId) {
-      clearInterval(intervalId);
-    }
     let adjustedTime = baseTimes[hardness] * 60;
     if (size === 'Small') adjustedTime -= 30;
     if (size === 'Large') adjustedTime += 30;
     if (temperature === 'Fridge') adjustedTime += 45;
+    
     setTime(adjustedTime);
     setIsCooking(true);
-    const id = setInterval(() => {
-      setTime(prevTime => {
-          if (prevTime <= 0) {
-            clearInterval(id);
-            setIsCooking(false);
-            setShowAlarm(true);
-            if (!alarmAudioRef.current) {
-              alarmAudioRef.current = new Audio('/alarm.mp3');
-              alarmAudioRef.current.loop = true;
-            }
-            alarmAudioRef.current.play();
-            return 0;
-          }
-        return prevTime - 1;
-      });
-    }, 1000);
-    setIntervalId(id);
+    workerRef.current?.postMessage({ type: 'start', time: adjustedTime });
   };
 
   const cancelBoil = () => {
@@ -64,18 +71,17 @@ const App: React.FC = () => {
   };
 
   const resetTimer = () => {
-    if (intervalId) {
+    if (animationFrameRef.current) {
       setShowResetConfirm(true);
     }
   };
 
   const confirmReset = () => {
-    if (intervalId) {
-      clearInterval(intervalId);
-      setIntervalId(null);
-      setTime(0);
-      setIsCooking(false);
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
     }
+    setTime(0);
+    setIsCooking(false);
     setShowResetConfirm(false);
   };
 
