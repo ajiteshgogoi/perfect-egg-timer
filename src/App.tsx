@@ -257,8 +257,8 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b from-orange-100 to-orange-200 text-orange-900 overflow-y-auto md:overflow-y-visible">
-        <div className="flex flex-col items-center justify-center min-h-[calc(100vh-6rem)]">
+      <div className="flex flex-col min-h-screen bg-gradient-to-b from-orange-100 to-orange-200 text-orange-900">
+        <div className="flex flex-col items-center justify-center flex-grow">
       <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-orange-600 mb-8 flex flex-row items-center justify-center">
         <span className="inline-block transform rotate-12 text-white [text-shadow:_0_0_2px_rgba(0,0,0,0.3)] mr-2 sm:mr-4">🥚</span>
         <span>Perfect Egg Timer</span>
@@ -293,7 +293,7 @@ const App: React.FC = () => {
           </div>
         </div>
       )}
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 mx-4 sm:mx-8 md:mx-8 lg:mx-12 w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-[calc(100%-4rem)] lg:w-full max-w-[48rem] space-y-6 border-2 border-orange-200 mb-2">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 mx-4 sm:mx-8 md:mx-8 lg:mx-12 w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-[calc(100%-4rem)] lg:w-full max-w-[48rem] space-y-6 border-2 border-orange-200 mb-2 overflow-x-hidden">
         <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium">Temperature</label>
