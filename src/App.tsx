@@ -10,7 +10,7 @@ const App: React.FC = () => {
   const [hardness, setHardness] = useState<Hardness>('Runny');
   const [time, setTime] = useState(0);
   const baseTimes: Record<Hardness, number> = {
-    Runny: 5,
+    Runny: 1,
     Soft: 7, 
     Hard: 10
   };
@@ -35,11 +35,17 @@ const App: React.FC = () => {
   useEffect(() => {
     workerRef.current = new Worker(new URL('./timer.worker.ts', import.meta.url));
     workerRef.current.onmessage = (e) => {
-      if (e.data.done) {
-        setIsCooking(false);
-        setShowAlarm(true);
-          alarmAudioRef.current.loop = true;
-          alarmAudioRef.current.play();
+        if (e.data.done) {
+          setShowAlarm(true);
+          setIsCooking(false);
+    if (alarmAudioRef.current) {
+      alarmAudioRef.current.pause();
+      alarmAudioRef.current.currentTime = 0;
+      if (enableAlarm) {
+        alarmAudioRef.current.loop = true;
+        alarmAudioRef.current.play();
+      }
+    }
       } else {
         // Update both time and progress bar
         setTime(Math.floor(e.data.time));
@@ -65,8 +71,15 @@ const App: React.FC = () => {
   };
 
   const confirmAlarmPreference = (enable: boolean) => {
-    setShowAlarmPreference(false);
     setEnableAlarm(enable);
+    setShowAlarmPreference(false);
+    
+    // Ensure any existing alarm is stopped
+    if (alarmAudioRef.current) {
+      alarmAudioRef.current.pause();
+      alarmAudioRef.current.currentTime = 0;
+    }
+    
     let adjustedTime = baseTimes[hardness] * 60;
     if (size === 'Small') adjustedTime -= 30;
     if (size === 'Large') adjustedTime += 30;
@@ -104,6 +117,7 @@ const App: React.FC = () => {
     setTime(0);
     setIsCooking(false);
     setShowResetConfirm(false);
+    setEnableAlarm(true);
     
     // Stop any alarm
     if (alarmAudioRef.current) {
@@ -111,17 +125,21 @@ const App: React.FC = () => {
       alarmAudioRef.current.currentTime = 0;
     }
     setShowAlarm(false);
-    
-    // Create new worker instance
-    const newWorker = new Worker(new URL('./timer.worker.ts', import.meta.url));
-    newWorker.onmessage = (e) => {
-      if (e.data.done) {
-        setIsCooking(false);
-        setShowAlarm(true);
-        if (enableAlarm) {
-          alarmAudioRef.current.loop = true;
-          alarmAudioRef.current.play();
-        }
+        
+        // Create new worker instance
+        const newWorker = new Worker(new URL('./timer.worker.ts', import.meta.url));
+        newWorker.onmessage = (e) => {
+          if (e.data.done) {
+            setShowAlarm(true);
+            setIsCooking(false);
+    if (alarmAudioRef.current) {
+      alarmAudioRef.current.pause();
+      alarmAudioRef.current.currentTime = 0;
+      if (enableAlarm) {
+        alarmAudioRef.current.loop = true;
+        alarmAudioRef.current.play();
+      }
+    }
       } else {
         setTime(Math.floor(e.data.time));
         requestAnimationFrame(() => {
