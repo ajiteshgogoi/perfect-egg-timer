@@ -1,8 +1,10 @@
+declare const self: Worker;
+
 let timer: NodeJS.Timeout | null = null;
 let startTime = 0;
 let remainingTime = 0;
 
-self.onmessage = (e) => {
+self.onmessage = (e: MessageEvent<{ type: string; time: number }>) => {
   const { type, time } = e.data;
   
   if (type === 'start') {
@@ -29,3 +31,5 @@ self.onmessage = (e) => {
     }
   }
 };
+
+export {};
