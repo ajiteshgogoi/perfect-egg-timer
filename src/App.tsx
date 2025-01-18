@@ -21,46 +21,114 @@ const App: React.FC = () => {
   const [showBoilWarning, setShowBoilWarning] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
-  const [enableAlarm, setEnableAlarm] = useState(true);
   const [showAlarmPreference, setShowAlarmPreference] = useState(false);
-  const alarmAudioRef = useRef<HTMLAudioElement>(
-    document.getElementById('alarm') as HTMLAudioElement
-  );
+  const [isAlarmPlaying, setIsAlarmPlaying] = useState(false);
+  const alarmAudioRef = useRef<HTMLAudioElement>(new Audio('/alarm.mp3'));
+
+  useEffect(() => {
+    // Initialize audio element
+    const audio = alarmAudioRef.current;
+    audio.id = 'alarm';
+    audio.preload = 'auto';
+    
+    return () => {
+      // Cleanup audio on unmount
+      audio.pause();
+      audio.currentTime = 0;
+      setIsAlarmPlaying(false);
+    };
+  }, []);
   const startTimeRef = useRef<number>(0);
   const remainingTimeRef = useRef<number>(0);
   const animationFrameRef = useRef<number>(0);
 
   const workerRef = useRef<Worker>();
 
-  useEffect(() => {
-    workerRef.current = new Worker(new URL('./timer.worker.ts', import.meta.url));
-    workerRef.current.onmessage = (e) => {
-        if (e.data.done) {
-          setShowAlarm(true);
-          setIsCooking(false);
-          if (alarmAudioRef.current) {
-            alarmAudioRef.current.pause();
-            alarmAudioRef.current.currentTime = 0;
-          if (enableAlarm) {
-            console.log('Playing alarm - enableAlarm:', enableAlarm);
-            alarmAudioRef.current.loop = true;
-            alarmAudioRef.current.play();
-          } else {
-            console.log('Alarm disabled - enableAlarm:', enableAlarm);
-          }
-          }
-        } else {
-        // Update both time and progress bar
-        setTime(Math.floor(e.data.time));
-        // Force progress bar update even in background
+  const createMessageHandler = () => (e: MessageEvent) => {
+    if (e.data.done) {
+      setShowAlarm(true);
+      setIsCooking(false);
+      setTime(0);
+      
+      // Stop any existing alarm
+      if (alarmAudioRef.current && isAlarmPlaying) {
+        alarmAudioRef.current.pause();
+        alarmAudioRef.current.currentTime = 0;
+        setIsAlarmPlaying(false);
+      }
+      
+      // Only play new alarm if enabled
+      const enableAlarm = e.data.enableAlarm ?? false;
+      console.log('Alarm preference:', enableAlarm);
+      
+      if (enableAlarm && alarmAudioRef.current) {
+        // Wait for pause to complete before playing
+        setTimeout(() => {
+          alarmAudioRef.current.loop = true;
+          alarmAudioRef.current.play()
+            .then(() => setIsAlarmPlaying(true))
+            .catch((error) => {
+              console.log('Alarm playback failed:', error);
+              setIsAlarmPlaying(false);
+            });
+        }, 100); // Small delay to ensure pause completes
+      }
+      
+      // Stop the worker when done
+      if (workerRef.current) {
+        workerRef.current.postMessage({ type: 'stop' });
+      }
+    } else if (typeof e.data.time === 'number' && !isNaN(e.data.time)) {
+      const newTime = Math.floor(e.data.time);
+      if (!isNaN(newTime)) {
+        setTime(newTime);
         requestAnimationFrame(() => {
-          setTime(prev => prev); // Force re-render
+          setTime(prev => prev);
         });
       }
-    };
+    }
+  };
+
+  useEffect(() => {
+    // Only initialize worker if it doesn't already exist
+    if (!workerRef.current) {
+      const initializeWorker = async () => {
+        try {
+          const worker = new Worker(new URL('./timer.worker.ts', import.meta.url));
+          worker.onmessage = createMessageHandler();
+          worker.onerror = (error) => {
+            console.error('Worker error:', error);
+          };
+          workerRef.current = worker;
+          console.log('Worker initialized successfully');
+
+          // Test worker communication
+          worker.postMessage({ type: 'ping' });
+
+          // Add error listener for unhandled worker errors
+          worker.addEventListener('error', (event) => {
+            console.error('Worker error event:', event);
+          });
+
+          // Add messageerror listener
+          worker.addEventListener('messageerror', (event) => {
+            console.error('Worker message error:', event);
+          });
+        } catch (error) {
+          console.error('Failed to initialize worker:', error);
+        }
+      };
+
+      initializeWorker();
+    }
 
     return () => {
-      workerRef.current?.terminate();
+      // Only terminate worker if it exists and we're not in development mode
+      if (workerRef.current && process.env.NODE_ENV !== 'development') {
+        workerRef.current.terminate();
+        console.log('Worker terminated');
+        workerRef.current = undefined;
+      }
     };
   }, []);
 
@@ -74,26 +142,38 @@ const App: React.FC = () => {
   };
 
   const confirmAlarmPreference = (enable: boolean) => {
-    setEnableAlarm(enable);
     setShowAlarmPreference(false);
     
-    // Update worker with new alarm preference
-    workerRef.current?.postMessage({ type: 'update', enableAlarm: enable });
-    
-    // Ensure any existing alarm is stopped
+    // Immediately stop any existing alarm
     if (alarmAudioRef.current) {
       alarmAudioRef.current.pause();
       alarmAudioRef.current.currentTime = 0;
     }
     
+    // Log the alarm preference
+    console.log('Alarm preference set to:', enable);
+    
+    // Calculate adjusted time
     let adjustedTime = baseTimes[hardness] * 60;
     if (size === 'Small') adjustedTime -= 30;
     if (size === 'Large') adjustedTime += 30;
     if (temperature === 'Fridge') adjustedTime += 45;
     
+    // Start timer with current alarm preference
     setTime(adjustedTime);
     setIsCooking(true);
-    workerRef.current?.postMessage({ type: 'start', time: adjustedTime, enableAlarm });
+    workerRef.current?.postMessage({ 
+      type: 'start', 
+      time: adjustedTime,
+      enableAlarm: enable // Pass alarm preference to worker
+    });
+    
+    // Store alarm preference in localStorage
+    try {
+      localStorage.setItem('enableAlarm', JSON.stringify(enable));
+    } catch (error) {
+      console.error('Failed to store alarm preference:', error);
+    }
   };
 
   const cancelBoil = () => {
@@ -112,51 +192,23 @@ const App: React.FC = () => {
       animationFrameRef.current = 0;
     }
     
-    // Stop and terminate worker
+    // Stop worker but don't terminate
     if (workerRef.current) {
       workerRef.current.postMessage({ type: 'stop' });
-      workerRef.current.terminate();
-      workerRef.current = undefined;
     }
     
     // Reset all state
     setTime(0);
     setIsCooking(false);
     setShowResetConfirm(false);
-    // Don't reset enableAlarm - preserve current setting
     
     // Stop any alarm
-    if (alarmAudioRef.current) {
-      alarmAudioRef.current.pause();
-      alarmAudioRef.current.currentTime = 0;
-    }
-    setShowAlarm(false);
-        
-        // Create new worker instance
-        const newWorker = new Worker(new URL('./timer.worker.ts', import.meta.url));
-        newWorker.onmessage = (e) => {
-          if (e.data.done) {
-            setShowAlarm(true);
-            setIsCooking(false);
-            if (alarmAudioRef.current) {
-              alarmAudioRef.current.pause();
-              alarmAudioRef.current.currentTime = 0;
-              if (enableAlarm) {
-                console.log('Playing alarm - enableAlarm:', enableAlarm);
-                alarmAudioRef.current.loop = true;
-                alarmAudioRef.current.play();
-              } else {
-                console.log('Alarm disabled - enableAlarm:', enableAlarm);
-              }
-            }
-          } else {
-        setTime(Math.floor(e.data.time));
-        requestAnimationFrame(() => {
-          setTime(prev => prev);
-        });
-      }
-    };
-    workerRef.current = newWorker;
+                  if (alarmAudioRef.current && isAlarmPlaying) {
+                    alarmAudioRef.current.pause();
+                    alarmAudioRef.current.currentTime = 0;
+                    setIsAlarmPlaying(false);
+                  }
+                  setShowAlarm(false);
   };
 
   const cancelReset = () => {
