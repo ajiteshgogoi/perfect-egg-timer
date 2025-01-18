@@ -10,7 +10,7 @@ const App: React.FC = () => {
   const [hardness, setHardness] = useState<Hardness>('Runny');
   const [time, setTime] = useState(0);
   const baseTimes: Record<Hardness, number> = {
-    Runny: 5,
+    Runny: 1,
     Soft: 7, 
     Hard: 10
   };
@@ -21,7 +21,6 @@ const App: React.FC = () => {
   const [showBoilWarning, setShowBoilWarning] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
-  const alarmAudioRef = useRef<HTMLAudioElement | null>(null);
   const startTimeRef = useRef<number>(0);
   const remainingTimeRef = useRef<number>(0);
   const animationFrameRef = useRef<number>(0);
@@ -34,11 +33,17 @@ const App: React.FC = () => {
       if (e.data.done) {
         setIsCooking(false);
         setShowAlarm(true);
-        if (!alarmAudioRef.current) {
-          alarmAudioRef.current = new Audio('/alarm.mp3');
-          alarmAudioRef.current.loop = true;
+        const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
+        if (alarmAudio) {
+          alarmAudio.loop = true;
+          // iOS requires direct user interaction for audio playback
+          // We'll try to play and catch any errors
+          alarmAudio.play().catch(error => {
+            console.error('Audio playback failed:', error);
+            // Show visual indication that timer is done
+            setShowAlarm(true);
+          });
         }
-        alarmAudioRef.current.play();
       } else {
         // Update both time and progress bar
         setTime(Math.floor(e.data.time));
@@ -99,9 +104,10 @@ const App: React.FC = () => {
     setShowResetConfirm(false);
     
     // Stop any alarm
-    if (alarmAudioRef.current) {
-      alarmAudioRef.current.pause();
-      alarmAudioRef.current.currentTime = 0;
+    const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
+    if (alarmAudio) {
+      alarmAudio.pause();
+      alarmAudio.currentTime = 0;
     }
     setShowAlarm(false);
     
@@ -111,11 +117,14 @@ const App: React.FC = () => {
       if (e.data.done) {
         setIsCooking(false);
         setShowAlarm(true);
-        if (!alarmAudioRef.current) {
-          alarmAudioRef.current = new Audio('/alarm.mp3');
-          alarmAudioRef.current.loop = true;
+        const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
+        if (alarmAudio) {
+          alarmAudio.loop = true;
+          alarmAudio.play().catch(error => {
+            console.error('Audio playback failed:', error);
+            setShowAlarm(true);
+          });
         }
-        alarmAudioRef.current.play();
       } else {
         setTime(Math.floor(e.data.time));
         requestAnimationFrame(() => {
@@ -278,9 +287,10 @@ const App: React.FC = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => {
-                  if (alarmAudioRef.current) {
-                    alarmAudioRef.current.pause();
-                    alarmAudioRef.current.currentTime = 0;
+                  const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
+                  if (alarmAudio) {
+                    alarmAudio.pause();
+                    alarmAudio.currentTime = 0;
                   }
                   setShowAlarm(false);
                 }}
