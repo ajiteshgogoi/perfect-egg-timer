@@ -21,6 +21,8 @@ const App: React.FC = () => {
   const [showBoilConfirm, setShowBoilConfirm] = useState(false);
   const [showBoilWarning, setShowBoilWarning] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [showAlarm, setShowAlarm] = useState(false);
+  const [alarmAudio, setAlarmAudio] = useState<HTMLAudioElement | null>(null);
 
   const startTimer = () => {
     setShowBoilConfirm(true);
@@ -39,11 +41,16 @@ const App: React.FC = () => {
     setIsCooking(true);
     const id = setInterval(() => {
       setTime(prevTime => {
-        if (prevTime <= 0) {
-          clearInterval(id);
-          setIsCooking(false);
-          return 0;
-        }
+          if (prevTime <= 0) {
+            clearInterval(id);
+            setIsCooking(false);
+            setShowAlarm(true);
+            const audio = new Audio('/alarm.mp3');
+            audio.loop = true;
+            audio.play();
+            setAlarmAudio(audio);
+            return 0;
+          }
         return prevTime - 1;
       });
     }, 1000);
@@ -213,11 +220,35 @@ const App: React.FC = () => {
         </div>
       )}
 
+      {showAlarm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
+            <h2 className="text-2xl font-bold text-center text-orange-900 mb-4">
+              Your eggs are ready!
+            </h2>
+            <div className="flex justify-center">
+              <button
+                onClick={() => {
+                  setShowAlarm(false);
+                  if (alarmAudio) {
+                    alarmAudio.pause();
+                    setAlarmAudio(null);
+                  }
+                }}
+                className="bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showResetConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
           <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
             <h2 className="text-2xl font-bold text-center text-orange-900">
-              Reset Timer?
+              Reset Timer
             </h2>
             <p className="text-center text-orange-700">
               Are you sure you want to reset the timer?
