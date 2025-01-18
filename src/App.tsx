@@ -94,7 +94,7 @@ const App: React.FC = () => {
       </button>
 
       {showInstructions && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 w-full max-w-[48rem] space-y-4 border-2 border-orange-200">
             <h2 className="text-xl font-bold text-orange-800 mb-4">Boiling Instructions:</h2>
             <ol className="list-decimal list-inside space-y-2 text-orange-700">
@@ -166,7 +166,7 @@ const App: React.FC = () => {
       </div>
 
       {showBoilConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
           <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
             <h2 className="text-2xl font-bold text-center text-orange-900 mb-4">
               Is the water boiling?
@@ -193,7 +193,7 @@ const App: React.FC = () => {
       )}
 
       {showBoilWarning && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
           <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
             <h2 className="text-2xl font-bold text-center text-orange-900 mb-4">
               Water Not Boiling
@@ -214,7 +214,7 @@ const App: React.FC = () => {
       )}
 
       {showResetConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
           <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
             <h2 className="text-2xl font-bold text-center text-orange-900">
               Reset Timer?
@@ -240,7 +240,7 @@ const App: React.FC = () => {
         </div>
       )}
       </div>
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-1">
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-1 z-30">
         <a 
           href="https://ko-fi.com/gogoi" 
           target="_blank" 
