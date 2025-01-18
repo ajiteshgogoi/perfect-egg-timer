@@ -21,6 +21,8 @@ const App: React.FC = () => {
   const [showBoilWarning, setShowBoilWarning] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
+  const [enableAlarm, setEnableAlarm] = useState(true);
+  const [showAlarmPreference, setShowAlarmPreference] = useState(false);
   const alarmAudioRef = useRef<HTMLAudioElement>(
     document.getElementById('alarm') as HTMLAudioElement
   );
@@ -59,6 +61,12 @@ const App: React.FC = () => {
 
   const confirmBoil = () => {
     setShowBoilConfirm(false);
+    setShowAlarmPreference(true);
+  };
+
+  const confirmAlarmPreference = (enable: boolean) => {
+    setShowAlarmPreference(false);
+    setEnableAlarm(enable);
     let adjustedTime = baseTimes[hardness] * 60;
     if (size === 'Small') adjustedTime -= 30;
     if (size === 'Large') adjustedTime += 30;
@@ -110,8 +118,10 @@ const App: React.FC = () => {
       if (e.data.done) {
         setIsCooking(false);
         setShowAlarm(true);
+        if (enableAlarm) {
           alarmAudioRef.current.loop = true;
           alarmAudioRef.current.play();
+        }
       } else {
         setTime(Math.floor(e.data.time));
         requestAnimationFrame(() => {
@@ -235,6 +245,33 @@ const App: React.FC = () => {
               </button>
               <button
                 onClick={cancelBoil}
+                className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAlarmPreference && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
+            <h2 className="text-2xl font-bold text-center text-orange-900 mb-4">
+              Alarm Sound
+            </h2>
+            <p className="text-center text-orange-700 mb-6">
+              Do you want an alarm to play when the timer ends?
+            </p>
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={() => confirmAlarmPreference(true)}
+                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95"
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => confirmAlarmPreference(false)}
                 className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
               >
                 No
