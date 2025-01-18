@@ -110,7 +110,7 @@ const App: React.FC = () => {
               <li>Fill a pot with enough water to completely submerge the eggs by at least 1 inch.</li>
               <li>Place the eggs in water.</li>
               <li>Bring the water to a boil (large rapidly forming bubbles at water surface).</li>
-              <li>Start the egg timer with correct settings.</li>
+              <li>Once the water is boliling, start the egg timer with correct settings.</li>
               <li>When the timer goes off, transfer the eggs to a bowl of ice water, or run them under cold water. This is important to stop the cooking process!</li>
             </ol>
             <div className="flex justify-center">
