@@ -257,7 +257,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen bg-gradient-to-b from-orange-100 to-orange-200 text-orange-900">
+      <div className="flex flex-col min-h-screen overflow-y-auto bg-gradient-to-b from-orange-100 to-orange-200 text-orange-900">
         <div className="flex flex-col items-center justify-center flex-grow">
       <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-orange-600 mb-8 flex flex-row items-center justify-center">
         <span className="inline-block transform rotate-12 text-white [text-shadow:_0_0_2px_rgba(0,0,0,0.3)] mr-2 sm:mr-4">🥚</span>
@@ -378,6 +378,9 @@ const App: React.FC = () => {
             </h2>
             <p className="text-center text-orange-700 mb-6">
               Do you want an alarm to play when the timer ends?
+            </p>
+            <p className="text-xs text-center text-gray-600 mb-6">
+              Note: Alarm sounds from browsers won't play in the background on iOS devices.
             </p>
             <div className="flex justify-center space-x-4">
               <button
