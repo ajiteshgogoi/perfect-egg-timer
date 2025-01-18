@@ -276,7 +276,7 @@ const App: React.FC = () => {
           </div>
         </div>
       )}
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 mx-4 sm:mx-8 md:mx-12 w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-full max-w-[48rem] space-y-6 border-2 border-orange-200 mb-2">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 mx-4 sm:mx-8 md:mx-8 lg:mx-12 w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-[calc(100%-4rem)] lg:w-full max-w-[48rem] space-y-6 border-2 border-orange-200 mb-2">
         <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium">Temperature</label>
