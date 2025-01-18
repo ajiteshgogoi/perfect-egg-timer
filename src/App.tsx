@@ -124,7 +124,7 @@ const App: React.FC = () => {
           </div>
         </div>
       )}
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 mx-6 sm:mx-12 w-full max-w-[48rem] space-y-6 border-2 border-orange-200">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 mx-6 sm:mx-12 w-full max-w-[48rem] space-y-6 border-2 border-orange-200 mb-2">
         <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium">Temperature</label>
@@ -273,7 +273,7 @@ const App: React.FC = () => {
         </div>
       )}
         </div>
-        <div className="mt-auto py-4 flex flex-col items-center space-y-1 z-30 w-full">
+        <div className="mt-auto mt-2 py-4 flex flex-col items-center space-y-1 z-30 w-full">
           <a 
             href="https://ko-fi.com/gogoi" 
             target="_blank" 
