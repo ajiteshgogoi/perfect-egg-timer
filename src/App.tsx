@@ -159,7 +159,7 @@ const App: React.FC = () => {
               alarmAudioRef.current.pause();
               alarmAudioRef.current.currentTime = 0;
               alarmAudioRef.current.volume = 1;
-            }, 100); // Play silently for 100ms
+            }, 20); // Play silently for 20ms
           })
           .catch((error) => {
             console.log('Alarm initialization failed:', error);
