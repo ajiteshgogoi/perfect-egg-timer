@@ -183,7 +183,12 @@ const App: React.FC = () => {
           type="checkbox"
           id="audio-enabled"
           checked={audioEnabled}
-          onChange={(e) => setAudioEnabled(e.target.checked)}
+          onChange={(e) => {
+            setAudioEnabled(e.target.checked);
+            if (e.target.checked) {
+              enableAudio();
+            }
+          }}
           className="w-5 h-5 text-orange-600 border-2 border-orange-300 rounded focus:ring-orange-500"
         />
         <label htmlFor="audio-enabled" className="ml-2 text-sm text-orange-700">
