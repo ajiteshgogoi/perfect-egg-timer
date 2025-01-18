@@ -33,9 +33,10 @@ const App: React.FC = () => {
         if (e.data.done) {
           setIsCooking(false);
           setShowAlarm(true);
-          if (audioEnabled) {
-            const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
-            if (alarmAudio) {
+          // Handle alarm audio based on audioEnabled state
+          const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
+          if (alarmAudio) {
+            if (audioEnabled) {
               alarmAudio.loop = true;
               // iOS requires direct user interaction for audio playback
               // We'll try to play and catch any errors
@@ -44,6 +45,10 @@ const App: React.FC = () => {
                 // Show visual indication that timer is done
                 setShowAlarm(true);
               });
+            } else {
+              // Ensure no audio is playing if audio is disabled
+              alarmAudio.pause();
+              alarmAudio.currentTime = 0;
             }
           }
       } else {
@@ -64,6 +69,8 @@ const App: React.FC = () => {
   const [audioEnabled, setAudioEnabled] = useState(true);
   
   const enableAudio = () => {
+    if (!audioEnabled) return;
+    
     // Play/pause a silent audio to enable audio context
     const audio = document.getElementById('alarm-sound') as HTMLAudioElement;
     if (audio) {
@@ -327,6 +334,7 @@ const App: React.FC = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => {
+                  // Stop alarm
                   const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
                   if (alarmAudio) {
                     alarmAudio.pause();
