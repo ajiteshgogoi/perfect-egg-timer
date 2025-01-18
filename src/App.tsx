@@ -90,10 +90,10 @@ const App: React.FC = () => {
     <>
       <div className="min-h-screen bg-gradient-to-b from-orange-200 to-orange-300 text-orange-900">
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-6rem)]">
-      <h1 className="text-4xl md:text-6xl font-bold text-center text-orange-600 mb-8">
-        <span className="inline-block transform rotate-12 text-white [text-shadow:_0_0_4px_rgba(0,0,0,0.5)]">🥚</span>
-        <span className="mx-4">Perfect Egg Timer</span>
-        <span className="inline-block transform -rotate-12 text-white [text-shadow:_0_0_4px_rgba(0,0,0,0.5)]">🐣</span>
+      <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-orange-600 mb-8 flex flex-row items-center justify-center">
+        <span className="inline-block transform rotate-12 text-white [text-shadow:_0_0_4px_rgba(0,0,0,0.5)] mr-2 sm:mr-4">🥚</span>
+        <span>Perfect Egg Timer</span>
+        <span className="inline-block transform -rotate-12 text-white [text-shadow:_0_0_4px_rgba(0,0,0,0.5)] ml-2 sm:ml-4">🐣</span>
       </h1>
       <button 
         onClick={() => setShowInstructions(true)}
