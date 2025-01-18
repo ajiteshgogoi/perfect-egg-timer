@@ -272,7 +272,7 @@ const App: React.FC = () => {
         </div>
       )}
       </div>
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-1 z-30">
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-1 z-30 pb-[env(safe-area-inset-bottom)]">
         <a 
           href="https://ko-fi.com/gogoi" 
           target="_blank" 
