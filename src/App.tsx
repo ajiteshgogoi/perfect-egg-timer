@@ -18,8 +18,15 @@ const App: React.FC = () => {
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [isCooking, setIsCooking] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [showBoilConfirm, setShowBoilConfirm] = useState(false);
+  const [showBoilWarning, setShowBoilWarning] = useState(false);
 
   const startTimer = () => {
+    setShowBoilConfirm(true);
+  };
+
+  const confirmBoil = () => {
+    setShowBoilConfirm(false);
     if (intervalId) {
       clearInterval(intervalId);
     }
@@ -40,6 +47,11 @@ const App: React.FC = () => {
       });
     }, 1000);
     setIntervalId(id);
+  };
+
+  const cancelBoil = () => {
+    setShowBoilConfirm(false);
+    setShowBoilWarning(true);
   };
 
   const resetTimer = () => {
@@ -119,6 +131,54 @@ const App: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {showBoilConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
+            <h2 className="text-2xl font-bold text-center text-orange-900 mb-4">
+              Is the water boiling?
+            </h2>
+            <p className="text-center text-orange-700 mb-6">
+              The timer will only start when the water is boiling
+            </p>
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={confirmBoil}
+                className="bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95"
+              >
+                Yes
+              </button>
+              <button
+                onClick={cancelBoil}
+                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showBoilWarning && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
+            <h2 className="text-2xl font-bold text-center text-orange-900 mb-4">
+              Water Not Boiling
+            </h2>
+            <p className="text-center text-orange-700 mb-6">
+              Please wait for water to boil before starting timer
+            </p>
+            <div className="flex justify-center">
+              <button
+                onClick={() => setShowBoilWarning(false)}
+                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showResetConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
