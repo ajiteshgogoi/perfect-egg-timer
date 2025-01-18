@@ -35,28 +35,14 @@ const App: React.FC = () => {
         setShowAlarm(true);
         const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
         if (alarmAudio) {
-          // Set volume and play
-          alarmAudio.volume = 0.5;
           alarmAudio.loop = true;
-          
-          // Try to play with error handling
-          try {
-            const playPromise = alarmAudio.play();
-            if (playPromise !== undefined) {
-              playPromise
-                .then(() => {
-                  // Audio is playing
-                })
-                .catch(error => {
-                  console.error('Audio playback failed:', error);
-                  // Show visual indication that timer is done
-                  setShowAlarm(true);
-                });
-            }
-          } catch (error) {
-            console.error('Audio playback error:', error);
+          // iOS requires direct user interaction for audio playback
+          // We'll try to play and catch any errors
+          alarmAudio.play().catch(error => {
+            console.error('Audio playback failed:', error);
+            // Show visual indication that timer is done
             setShowAlarm(true);
-          }
+          });
         }
       } else {
         // Update both time and progress bar
