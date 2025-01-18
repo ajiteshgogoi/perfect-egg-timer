@@ -79,7 +79,8 @@ const App: React.FC = () => {
   const seconds = time % 60;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-50 to-orange-50 text-orange-900">
+    <>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-50 to-orange-50 text-orange-900">
       <h1 className="text-6xl font-bold text-center text-orange-600 mb-8 transform transition-all duration-300 hover:scale-105 hover:rotate-1">
         <span className="inline-block transform rotate-12">🥚</span>
         <span className="mx-4">Perfect Egg Timer</span>
@@ -87,7 +88,7 @@ const App: React.FC = () => {
       </h1>
       <button 
         onClick={() => setShowInstructions(true)}
-        className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-orange-200/50 active:scale-95 mb-8"
+        className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-orange-200/50 active:scale-95 mb-8"
       >
         Boiling Instructions
       </button>
@@ -106,7 +107,7 @@ const App: React.FC = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => setShowInstructions(false)}
-                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95 mt-4"
+                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95 mt-4"
               >
                 Close
               </button>
@@ -238,7 +239,22 @@ const App: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-1">
+        <a 
+          href="https://ko-fi.com/gogoi" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="bg-[#FF5AA1] text-white font-bold py-2 px-4 rounded-full transition-all duration-300 active:scale-95 flex items-center space-x-2 text-sm"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+            <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>
+          </svg>
+          <span>Buy Me a Coffee</span>
+        </a>
+        <div className="text-xs text-gray-500">© ajitesh gogoi</div>
+      </div>
+    </>
   );
 };
 
