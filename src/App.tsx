@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 type Temperature = 'Fridge' | 'Room';
 type Size = 'Small' | 'Medium' | 'Large';
@@ -10,7 +10,7 @@ const App: React.FC = () => {
   const [hardness, setHardness] = useState<Hardness>('Runny');
   const [time, setTime] = useState(0);
   const baseTimes: Record<Hardness, number> = {
-    Runny: 5,
+    Runny: 1,
     Soft: 7, 
     Hard: 10
   };
@@ -22,7 +22,7 @@ const App: React.FC = () => {
   const [showBoilWarning, setShowBoilWarning] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
-  const [alarmAudio, setAlarmAudio] = useState<HTMLAudioElement | null>(null);
+  const alarmAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const startTimer = () => {
     setShowBoilConfirm(true);
@@ -45,10 +45,11 @@ const App: React.FC = () => {
             clearInterval(id);
             setIsCooking(false);
             setShowAlarm(true);
-            const audio = new Audio('/alarm.mp3');
-            audio.loop = true;
-            audio.play();
-            setAlarmAudio(audio);
+            if (!alarmAudioRef.current) {
+              alarmAudioRef.current = new Audio('/alarm.mp3');
+              alarmAudioRef.current.loop = true;
+            }
+            alarmAudioRef.current.play();
             return 0;
           }
         return prevTime - 1;
@@ -229,11 +230,11 @@ const App: React.FC = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => {
-                  setShowAlarm(false);
-                  if (alarmAudio) {
-                    alarmAudio.pause();
-                    setAlarmAudio(null);
+                  if (alarmAudioRef.current) {
+                    alarmAudioRef.current.pause();
+                    alarmAudioRef.current.currentTime = 0;
                   }
+                  setShowAlarm(false);
                 }}
                 className="bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95"
               >
