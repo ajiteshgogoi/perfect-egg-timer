@@ -4,8 +4,14 @@ let timer: NodeJS.Timeout | null = null;
 let startTime = 0;
 let remainingTime = 0;
 
-self.onmessage = (e: MessageEvent<{ type: string; time: number }>) => {
-  const { type, time } = e.data;
+let enableAlarm = true;
+
+self.onmessage = (e: MessageEvent<{ type: string; time: number; enableAlarm?: boolean }>) => {
+  const { type, time, enableAlarm: alarmSetting } = e.data;
+  
+  if (alarmSetting !== undefined) {
+    enableAlarm = alarmSetting;
+  }
   
   if (type === 'start') {
     startTime = Date.now();
@@ -23,9 +29,17 @@ self.onmessage = (e: MessageEvent<{ type: string; time: number }>) => {
       
       if (newTime <= 0) {
         clearInterval(timer!);
-        self.postMessage({ done: true });
+        if (enableAlarm) {
+          self.postMessage({ done: true });
+        } else {
+          self.postMessage({ done: false });
+        }
       }
     }, 100); // Update every 100ms instead of 1000ms
+  }
+  
+  if (type === 'update' && typeof e.data.enableAlarm === 'boolean') {
+    enableAlarm = e.data.enableAlarm;
   }
   
   if (type === 'stop') {

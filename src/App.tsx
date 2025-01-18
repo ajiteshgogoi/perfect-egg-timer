@@ -38,15 +38,18 @@ const App: React.FC = () => {
         if (e.data.done) {
           setShowAlarm(true);
           setIsCooking(false);
-    if (alarmAudioRef.current) {
-      alarmAudioRef.current.pause();
-      alarmAudioRef.current.currentTime = 0;
-      if (enableAlarm) {
-        alarmAudioRef.current.loop = true;
-        alarmAudioRef.current.play();
-      }
-    }
-      } else {
+          if (alarmAudioRef.current) {
+            alarmAudioRef.current.pause();
+            alarmAudioRef.current.currentTime = 0;
+          if (enableAlarm) {
+            console.log('Playing alarm - enableAlarm:', enableAlarm);
+            alarmAudioRef.current.loop = true;
+            alarmAudioRef.current.play();
+          } else {
+            console.log('Alarm disabled - enableAlarm:', enableAlarm);
+          }
+          }
+        } else {
         // Update both time and progress bar
         setTime(Math.floor(e.data.time));
         // Force progress bar update even in background
@@ -74,6 +77,9 @@ const App: React.FC = () => {
     setEnableAlarm(enable);
     setShowAlarmPreference(false);
     
+    // Update worker with new alarm preference
+    workerRef.current?.postMessage({ type: 'update', enableAlarm: enable });
+    
     // Ensure any existing alarm is stopped
     if (alarmAudioRef.current) {
       alarmAudioRef.current.pause();
@@ -87,7 +93,7 @@ const App: React.FC = () => {
     
     setTime(adjustedTime);
     setIsCooking(true);
-    workerRef.current?.postMessage({ type: 'start', time: adjustedTime });
+    workerRef.current?.postMessage({ type: 'start', time: adjustedTime, enableAlarm });
   };
 
   const cancelBoil = () => {
@@ -117,7 +123,7 @@ const App: React.FC = () => {
     setTime(0);
     setIsCooking(false);
     setShowResetConfirm(false);
-    setEnableAlarm(true);
+    // Don't reset enableAlarm - preserve current setting
     
     // Stop any alarm
     if (alarmAudioRef.current) {
@@ -132,15 +138,18 @@ const App: React.FC = () => {
           if (e.data.done) {
             setShowAlarm(true);
             setIsCooking(false);
-    if (alarmAudioRef.current) {
-      alarmAudioRef.current.pause();
-      alarmAudioRef.current.currentTime = 0;
-      if (enableAlarm) {
-        alarmAudioRef.current.loop = true;
-        alarmAudioRef.current.play();
-      }
-    }
-      } else {
+            if (alarmAudioRef.current) {
+              alarmAudioRef.current.pause();
+              alarmAudioRef.current.currentTime = 0;
+              if (enableAlarm) {
+                console.log('Playing alarm - enableAlarm:', enableAlarm);
+                alarmAudioRef.current.loop = true;
+                alarmAudioRef.current.play();
+              } else {
+                console.log('Alarm disabled - enableAlarm:', enableAlarm);
+              }
+            }
+          } else {
         setTime(Math.floor(e.data.time));
         requestAnimationFrame(() => {
           setTime(prev => prev);
