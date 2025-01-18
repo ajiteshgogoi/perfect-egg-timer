@@ -12,16 +12,20 @@ self.onmessage = (e: MessageEvent<{ type: string; time: number }>) => {
     remainingTime = time;
     
     timer = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const elapsed = (Date.now() - startTime) / 1000;
       const newTime = Math.max(0, remainingTime - elapsed);
       
-      self.postMessage({ time: newTime });
+      // Send progress updates more frequently
+      self.postMessage({ 
+        time: newTime,
+        progress: 1 - (newTime / remainingTime)
+      });
       
       if (newTime <= 0) {
         clearInterval(timer!);
         self.postMessage({ done: true });
       }
-    }, 1000);
+    }, 100); // Update every 100ms instead of 1000ms
   }
   
   if (type === 'stop') {

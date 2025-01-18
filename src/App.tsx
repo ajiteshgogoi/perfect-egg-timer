@@ -40,7 +40,12 @@ const App: React.FC = () => {
         }
         alarmAudioRef.current.play();
       } else {
-        setTime(e.data.time);
+        // Update both time and progress bar
+        setTime(Math.floor(e.data.time));
+        // Force progress bar update even in background
+        requestAnimationFrame(() => {
+          setTime(prev => prev); // Force re-render
+        });
       }
     };
 
