@@ -20,6 +20,7 @@ const App: React.FC = () => {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showBoilConfirm, setShowBoilConfirm] = useState(false);
   const [showBoilWarning, setShowBoilWarning] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   const startTimer = () => {
     setShowBoilConfirm(true);
@@ -84,6 +85,35 @@ const App: React.FC = () => {
         <span className="mx-4">Perfect Egg Timer</span>
         <span className="inline-block transform -rotate-12">🍳</span>
       </h1>
+      <button 
+        onClick={() => setShowInstructions(true)}
+        className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-orange-200/50 active:scale-95 mb-8"
+      >
+        Boiling Instructions
+      </button>
+
+      {showInstructions && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 w-full max-w-[48rem] space-y-4 border-2 border-orange-200">
+            <h2 className="text-xl font-bold text-orange-800 mb-4">Boiling Instructions:</h2>
+            <ol className="list-decimal list-inside space-y-2 text-orange-700">
+              <li>Fill a pot with enough water to completely submerge the eggs by at least 1 inch.</li>
+              <li>Place the eggs in water.</li>
+              <li>Bring the water to a boil (large rapidly forming bubbles at water surface).</li>
+              <li>Start the egg timer with correct settings.</li>
+              <li>When the timer goes off, transfer the eggs to a bowl of ice water. Or run them under cold water. This is important to stop the cooking process!</li>
+            </ol>
+            <div className="flex justify-center">
+              <button
+                onClick={() => setShowInstructions(false)}
+                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95 mt-4"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 w-full max-w-[48rem] space-y-6 border-2 border-orange-200">
         <div className="grid grid-cols-3 gap-4">
           <div>
