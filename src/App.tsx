@@ -115,7 +115,7 @@ const App: React.FC = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => setShowInstructions(false)}
-                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95 mt-4"
+                className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95 mt-4"
               >
                 Close
               </button>
@@ -167,7 +167,7 @@ const App: React.FC = () => {
           >
             {isCooking ? 'Cooking...' : 'Start'}
           </button>
-          <button onClick={resetTimer} className="bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95">
+            <button onClick={resetTimer} className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95">
             Reset
           </button>
         </div>
@@ -191,7 +191,7 @@ const App: React.FC = () => {
               </button>
               <button
                 onClick={cancelBoil}
-                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
+                className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
               >
                 No
               </button>
@@ -212,7 +212,7 @@ const App: React.FC = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => setShowBoilWarning(false)}
-                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
+                className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
               >
                 OK
               </button>
@@ -257,13 +257,13 @@ const App: React.FC = () => {
             <div className="flex justify-center space-x-4">
               <button
                 onClick={confirmReset}
-                className="bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95"
+                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95"
               >
                 Yes, Reset
               </button>
               <button
                 onClick={cancelReset}
-                className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
+                className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95"
               >
                 Cancel
               </button>
