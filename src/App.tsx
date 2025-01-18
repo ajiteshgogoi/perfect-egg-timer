@@ -88,7 +88,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-50 to-orange-50 text-orange-900">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-orange-200 to-orange-300 text-orange-900">
       <h1 className="text-6xl font-bold text-center text-orange-600 mb-8">
         <span className="inline-block transform rotate-12">🥚</span>
         <span className="mx-4">Perfect Egg Timer</span>
