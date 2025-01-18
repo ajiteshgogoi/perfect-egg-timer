@@ -99,7 +99,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b from-orange-200 to-orange-300 text-orange-900">
+      <div className="min-h-screen bg-gradient-to-b from-orange-100 to-orange-200 text-orange-900">
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-6rem)]">
       <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center text-orange-600 mb-8 flex flex-row items-center justify-center">
         <span className="inline-block transform rotate-12 text-white [text-shadow:_0_0_2px_rgba(0,0,0,0.3)] mr-2 sm:mr-4">🥚</span>
