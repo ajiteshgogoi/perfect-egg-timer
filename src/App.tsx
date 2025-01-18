@@ -21,7 +21,9 @@ const App: React.FC = () => {
   const [showBoilWarning, setShowBoilWarning] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
-  const alarmAudioRef = useRef<HTMLAudioElement | null>(null);
+  const alarmAudioRef = useRef<HTMLAudioElement>(
+    document.getElementById('alarm') as HTMLAudioElement
+  );
   const startTimeRef = useRef<number>(0);
   const remainingTimeRef = useRef<number>(0);
   const animationFrameRef = useRef<number>(0);
@@ -34,11 +36,8 @@ const App: React.FC = () => {
       if (e.data.done) {
         setIsCooking(false);
         setShowAlarm(true);
-        if (!alarmAudioRef.current) {
-          alarmAudioRef.current = new Audio('/alarm.mp3');
           alarmAudioRef.current.loop = true;
-        }
-        alarmAudioRef.current.play();
+          alarmAudioRef.current.play();
       } else {
         // Update both time and progress bar
         setTime(Math.floor(e.data.time));
@@ -111,11 +110,8 @@ const App: React.FC = () => {
       if (e.data.done) {
         setIsCooking(false);
         setShowAlarm(true);
-        if (!alarmAudioRef.current) {
-          alarmAudioRef.current = new Audio('/alarm.mp3');
           alarmAudioRef.current.loop = true;
-        }
-        alarmAudioRef.current.play();
+          alarmAudioRef.current.play();
       } else {
         setTime(Math.floor(e.data.time));
         requestAnimationFrame(() => {
