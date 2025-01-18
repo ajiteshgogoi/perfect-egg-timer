@@ -30,22 +30,20 @@ const App: React.FC = () => {
   useEffect(() => {
     workerRef.current = new Worker(new URL('./timer.worker.ts', import.meta.url));
     workerRef.current.onmessage = (e) => {
-        if (e.data.done) {
-          setIsCooking(false);
-          setShowAlarm(true);
-          if (audioEnabled) {
-            const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
-            if (alarmAudio) {
-              alarmAudio.loop = true;
-              // iOS requires direct user interaction for audio playback
-              // We'll try to play and catch any errors
-              alarmAudio.play().catch(error => {
-                console.error('Audio playback failed:', error);
-                // Show visual indication that timer is done
-                setShowAlarm(true);
-              });
-            }
-          }
+      if (e.data.done) {
+        setIsCooking(false);
+        setShowAlarm(true);
+        const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
+        if (alarmAudio) {
+          alarmAudio.loop = true;
+          // iOS requires direct user interaction for audio playback
+          // We'll try to play and catch any errors
+          alarmAudio.play().catch(error => {
+            console.error('Audio playback failed:', error);
+            // Show visual indication that timer is done
+            setShowAlarm(true);
+          });
+        }
       } else {
         // Update both time and progress bar
         setTime(Math.floor(e.data.time));
@@ -61,25 +59,8 @@ const App: React.FC = () => {
     };
   }, []);
 
-  const [audioEnabled, setAudioEnabled] = useState(true);
-  
-  const enableAudio = () => {
-    // Play/pause a silent audio to enable audio context
-    const audio = document.getElementById('alarm-sound') as HTMLAudioElement;
-    if (audio) {
-      audio.play().then(() => {
-        audio.pause();
-        setAudioEnabled(true);
-      }).catch(() => {
-        setShowAlarm(true);
-      });
-    }
-  };
-
   const startTimer = () => {
-    if (!isCooking) {
-      setShowBoilConfirm(true);
-    }
+    setShowBoilConfirm(true);
   };
 
   const confirmBoil = () => {
@@ -133,19 +114,17 @@ const App: React.FC = () => {
     // Create new worker instance
     const newWorker = new Worker(new URL('./timer.worker.ts', import.meta.url));
     newWorker.onmessage = (e) => {
-        if (e.data.done) {
-          setIsCooking(false);
-          setShowAlarm(true);
-          if (audioEnabled) {
-            const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
-            if (alarmAudio) {
-              alarmAudio.loop = true;
-              alarmAudio.play().catch(error => {
-                console.error('Audio playback failed:', error);
-                setShowAlarm(true);
-              });
-            }
-          }
+      if (e.data.done) {
+        setIsCooking(false);
+        setShowAlarm(true);
+        const alarmAudio = document.getElementById('alarm-sound') as HTMLAudioElement;
+        if (alarmAudio) {
+          alarmAudio.loop = true;
+          alarmAudio.play().catch(error => {
+            console.error('Audio playback failed:', error);
+            setShowAlarm(true);
+          });
+        }
       } else {
         setTime(Math.floor(e.data.time));
         requestAnimationFrame(() => {
@@ -174,22 +153,10 @@ const App: React.FC = () => {
       </h1>
       <button 
         onClick={() => setShowInstructions(true)}
-        className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-orange-200/50 active:scale-95 mb-4"
+        className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-orange-200/50 active:scale-95 mb-8"
       >
         Boiling Instructions
       </button>
-      <div className="flex items-center justify-center mb-8">
-        <input
-          type="checkbox"
-          id="audio-enabled"
-          checked={audioEnabled}
-          onChange={(e) => setAudioEnabled(e.target.checked)}
-          className="w-5 h-5 text-orange-600 border-2 border-orange-300 rounded focus:ring-orange-500"
-        />
-        <label htmlFor="audio-enabled" className="ml-2 text-sm text-orange-700">
-          Enable Sound Upon Completion
-        </label>
-      </div>
 
       {showInstructions && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
@@ -246,19 +213,17 @@ const App: React.FC = () => {
         </div>
         <div className="text-4xl font-bold text-center">{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</div>
         <div className="flex justify-center space-x-4">
-          <div className="flex flex-col items-center">
-            <button 
-              onClick={startTimer} 
-              disabled={isCooking}
-              className={`${
-                isCooking
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
-              } text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95`}
-            >
-              {isCooking ? 'Cooking...' : 'Start'}
-            </button>
-          </div>
+          <button 
+            onClick={startTimer} 
+            disabled={isCooking}
+            className={`${
+    isCooking 
+      ? 'bg-gray-400 cursor-not-allowed' 
+      : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
+            } text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95`}
+          >
+            {isCooking ? 'Cooking...' : 'Start'}
+          </button>
             <button onClick={resetTimer} className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95">
             Reset
           </button>
