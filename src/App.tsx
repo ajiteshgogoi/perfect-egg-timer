@@ -302,9 +302,9 @@ const App: React.FC = () => {
             </select>
           </div>
         </div>
-        <div className="relative w-full h-16 bg-orange-100 rounded-2xl overflow-hidden shadow-inner">
-          <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl transition-all duration-1000" style={{ width: `${(time / ((baseTimes[hardness] * 60) + (size === 'Small' ? -30 : size === 'Large' ? 30 : 0) + (temperature === 'Fridge' ? 45 : 0))) * 100}%` }}>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/20 to-transparent"></div>
+<div className="relative w-full h-16 bg-gray-100 rounded-2xl overflow-hidden shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.1)] border border-gray-300/75">
+  <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-300 to-orange-400 rounded-2xl transition-all duration-1000" style={{ width: `${(time / ((baseTimes[hardness] * 60) + (size === 'Small' ? -30 : size === 'Large' ? 30 : 0) + (temperature === 'Fridge' ? 45 : 0))) * 100}%` }}>
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/40 to-transparent"></div>
           </div>
         </div>
         <div className="text-4xl font-bold text-center">{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</div>
