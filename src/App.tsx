@@ -76,24 +76,54 @@ const App: React.FC = () => {
   };
 
   const resetTimer = () => {
-    if (animationFrameRef.current) {
-      setShowResetConfirm(true);
-    }
+    setShowResetConfirm(true);
   };
 
   const confirmReset = () => {
+    // Clear animation frame
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = 0;
     }
-    workerRef.current?.postMessage({ type: 'stop' });
+    
+    // Stop and terminate worker
+    if (workerRef.current) {
+      workerRef.current.postMessage({ type: 'stop' });
+      workerRef.current.terminate();
+      workerRef.current = undefined;
+    }
+    
+    // Reset all state
     setTime(0);
     setIsCooking(false);
     setShowResetConfirm(false);
+    
+    // Stop any alarm
     if (alarmAudioRef.current) {
       alarmAudioRef.current.pause();
       alarmAudioRef.current.currentTime = 0;
     }
     setShowAlarm(false);
+    
+    // Create new worker instance
+    const newWorker = new Worker(new URL('./timer.worker.ts', import.meta.url));
+    newWorker.onmessage = (e) => {
+      if (e.data.done) {
+        setIsCooking(false);
+        setShowAlarm(true);
+        if (!alarmAudioRef.current) {
+          alarmAudioRef.current = new Audio('/alarm.mp3');
+          alarmAudioRef.current.loop = true;
+        }
+        alarmAudioRef.current.play();
+      } else {
+        setTime(Math.floor(e.data.time));
+        requestAnimationFrame(() => {
+          setTime(prev => prev);
+        });
+      }
+    };
+    workerRef.current = newWorker;
   };
 
   const cancelReset = () => {
