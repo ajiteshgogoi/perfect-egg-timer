@@ -260,7 +260,7 @@ const App: React.FC = () => {
                 onClick={confirmReset}
                 className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95"
               >
-                Yes, Reset
+                Yes, reset
               </button>
               <button
                 onClick={cancelReset}
