@@ -102,7 +102,7 @@ const App: React.FC = () => {
               <li>Place the eggs in water.</li>
               <li>Bring the water to a boil (large rapidly forming bubbles at water surface).</li>
               <li>Start the egg timer with correct settings.</li>
-              <li>When the timer goes off, transfer the eggs to a bowl of ice water. Or run them under cold water. This is important to stop the cooking process!</li>
+              <li>When the timer goes off, transfer the eggs to a bowl of ice water, or run them under cold water. This is important to stop the cooking process!</li>
             </ol>
             <div className="flex justify-center">
               <button
@@ -172,7 +172,7 @@ const App: React.FC = () => {
               Is the water boiling?
             </h2>
             <p className="text-center text-orange-700 mb-6">
-              The timer will only start when the water is boiling
+              Only start the timer when the water is boiling
             </p>
             <div className="flex justify-center space-x-4">
               <button
