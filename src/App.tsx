@@ -144,10 +144,27 @@ const App: React.FC = () => {
   const confirmAlarmPreference = (enable: boolean) => {
     setShowAlarmPreference(false);
     
-    // Immediately stop any existing alarm
+    // Initialize or reset alarm audio
     if (alarmAudioRef.current) {
       alarmAudioRef.current.pause();
       alarmAudioRef.current.currentTime = 0;
+      if (enable) {
+        // Initialize audio by briefly playing silently
+        alarmAudioRef.current.volume = 0;
+        alarmAudioRef.current.play()
+          .then(() => {
+            console.log('Alarm audio initialized');
+            // Reset volume to normal after brief play
+            setTimeout(() => {
+              alarmAudioRef.current.pause();
+              alarmAudioRef.current.currentTime = 0;
+              alarmAudioRef.current.volume = 1;
+            }, 100); // Play silently for 100ms
+          })
+          .catch((error) => {
+            console.log('Alarm initialization failed:', error);
+          });
+      }
     }
     
     // Log the alarm preference
