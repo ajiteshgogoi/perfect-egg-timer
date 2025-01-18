@@ -10,7 +10,7 @@ const App: React.FC = () => {
   const [hardness, setHardness] = useState<Hardness>('Runny');
   const [time, setTime] = useState(0);
   const baseTimes: Record<Hardness, number> = {
-    Runny: 1,
+    Runny: 5,
     Soft: 7, 
     Hard: 10
   };
