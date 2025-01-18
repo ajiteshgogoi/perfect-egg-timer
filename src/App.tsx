@@ -85,9 +85,15 @@ const App: React.FC = () => {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
+    workerRef.current?.postMessage({ type: 'stop' });
     setTime(0);
     setIsCooking(false);
     setShowResetConfirm(false);
+    if (alarmAudioRef.current) {
+      alarmAudioRef.current.pause();
+      alarmAudioRef.current.currentTime = 0;
+    }
+    setShowAlarm(false);
   };
 
   const cancelReset = () => {

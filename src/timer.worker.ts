@@ -32,6 +32,9 @@ self.onmessage = (e: MessageEvent<{ type: string; time: number }>) => {
     if (timer) {
       clearInterval(timer);
       timer = null;
+      remainingTime = 0;
+      startTime = 0;
+      self.postMessage({ done: true });
     }
   }
 };
