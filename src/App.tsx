@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 
-type Temperature = 'Cold' | 'Room' | 'Hot';
+type Temperature = 'Fridge' | 'Room';
 type Size = 'Small' | 'Medium' | 'Large';
 type Hardness = 'Soft' | 'Medium' | 'Hard';
 
 const App: React.FC = () => {
-  const [temperature, setTemperature] = useState<Temperature>('Cold');
+  const [temperature, setTemperature] = useState<Temperature>('Fridge');
   const [size, setSize] = useState<Size>('Medium');
   const [hardness, setHardness] = useState<Hardness>('Medium');
   const [time, setTime] = useState(0);
   const timeOptions: Record<Temperature, Record<Size, Record<Hardness, number>>> = {
-    Cold: { Small: { Soft: 3, Medium: 4, Hard: 5 }, Medium: { Soft: 4, Medium: 5, Hard: 6 }, Large: { Soft: 5, Medium: 6, Hard: 7 } },
-    Room: { Small: { Soft: 2, Medium: 3, Hard: 4 }, Medium: { Soft: 3, Medium: 4, Hard: 5 }, Large: { Soft: 4, Medium: 5, Hard: 6 } },
-    Hot: { Small: { Soft: 1, Medium: 2, Hard: 3 }, Medium: { Soft: 2, Medium: 3, Hard: 4 }, Large: { Soft: 3, Medium: 4, Hard: 5 } }
+    Fridge: { Small: { Soft: 3, Medium: 4, Hard: 5 }, Medium: { Soft: 4, Medium: 5, Hard: 6 }, Large: { Soft: 5, Medium: 6, Hard: 7 } },
+    Room: { Small: { Soft: 2, Medium: 3, Hard: 4 }, Medium: { Soft: 3, Medium: 4, Hard: 5 }, Large: { Soft: 4, Medium: 5, Hard: 6 } }
   };
 
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
@@ -21,8 +20,9 @@ const App: React.FC = () => {
     if (intervalId) {
       clearInterval(intervalId);
     }
-    const selectedTime = timeOptions[temperature][size][hardness];
-    setTime(selectedTime * 60);
+    const baseTime = timeOptions[temperature][size][hardness] * 60;
+    const adjustedTime = temperature === 'Fridge' ? baseTime + 45 : baseTime;
+    setTime(adjustedTime);
     const id = setInterval(() => {
       setTime(prevTime => {
         if (prevTime <= 0) {
@@ -56,9 +56,8 @@ const App: React.FC = () => {
           <div>
             <label className="block text-sm font-medium">Temperature</label>
             <select value={temperature} onChange={(e) => setTemperature(e.target.value as Temperature)} className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-              <option>Cold</option>
+              <option>Fridge</option>
               <option>Room</option>
-              <option>Hot</option>
             </select>
           </div>
           <div>
