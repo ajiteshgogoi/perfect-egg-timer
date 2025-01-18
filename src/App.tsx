@@ -168,7 +168,7 @@ const App: React.FC = () => {
           >
             {isCooking ? 'Cooking...' : 'Start'}
           </button>
-            <button onClick={resetTimer} className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95">
+            <button onClick={resetTimer} className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95">
             Reset
           </button>
         </div>
@@ -258,7 +258,7 @@ const App: React.FC = () => {
             <div className="flex justify-center space-x-4">
               <button
                 onClick={confirmReset}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95"
+                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-red-200/50 active:scale-95"
               >
                 Yes, Reset
               </button>
