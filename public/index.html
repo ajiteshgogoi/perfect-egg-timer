@@ -14,6 +14,10 @@
   </head>
   <body>
     <div id="root"></div>
-    <audio id="alarm-sound" src="/alarm.aac" preload="auto"></audio>
+    <audio id="alarm-sound" preload="auto" playsinline>
+      <source src="/alarm.mp3" type="audio/mpeg">
+      <source src="/alarm.aac" type="audio/aac">
+      Your browser does not support the audio element.
+    </audio>
   </body>
 </html>
