@@ -201,14 +201,34 @@ const App: React.FC = () => {
     setTime(0);
     setIsCooking(false);
     setShowResetConfirm(false);
+    setShowAlarm(false);
     
     // Stop any alarm
-                  if (alarmAudioRef.current && isAlarmPlaying) {
-                    alarmAudioRef.current.pause();
-                    alarmAudioRef.current.currentTime = 0;
-                    setIsAlarmPlaying(false);
-                  }
-                  setShowAlarm(false);
+    if (alarmAudioRef.current && isAlarmPlaying) {
+      alarmAudioRef.current.pause();
+      alarmAudioRef.current.currentTime = 0;
+      setIsAlarmPlaying(false);
+    }
+    
+    // Reinitialize worker
+    if (workerRef.current) {
+      workerRef.current.terminate();
+      workerRef.current = undefined;
+    }
+    const initializeWorker = async () => {
+      try {
+        const worker = new Worker(new URL('./timer.worker.ts', import.meta.url));
+        worker.onmessage = createMessageHandler();
+        worker.onerror = (error) => {
+          console.error('Worker error:', error);
+        };
+        workerRef.current = worker;
+        console.log('Worker reinitialized after reset');
+      } catch (error) {
+        console.error('Failed to reinitialize worker:', error);
+      }
+    };
+    initializeWorker();
   };
 
   const cancelReset = () => {
