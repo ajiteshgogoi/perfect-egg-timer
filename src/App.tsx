@@ -5,9 +5,9 @@ type Size = 'Small' | 'Medium' | 'Large';
 type Hardness = 'Runny' | 'Soft' | 'Hard';
 
 const App: React.FC = () => {
-  const [temperature, setTemperature] = useState<Temperature>('Fridge');
+  const [temperature, setTemperature] = useState<Temperature>('Room');
   const [size, setSize] = useState<Size>('Medium');
-  const [hardness, setHardness] = useState<Hardness>('Soft');
+  const [hardness, setHardness] = useState<Hardness>('Runny');
   const [time, setTime] = useState(0);
   const baseTimes: Record<Hardness, number> = {
     Runny: 5,
@@ -79,10 +79,12 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-50 to-orange-50 text-orange-900">
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
-        <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
-          🥚 Egg Timer 🍳
-        </h1>
+      <h1 className="text-6xl font-bold text-center text-orange-600 mb-8 transform transition-all duration-300 hover:scale-105 hover:rotate-1">
+        <span className="inline-block transform rotate-12">🥚</span>
+        <span className="mx-4">Perfect Egg Timer</span>
+        <span className="inline-block transform -rotate-12">🍳</span>
+      </h1>
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 w-full max-w-[48rem] space-y-6 border-2 border-orange-200">
         <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium">Temperature</label>
@@ -92,7 +94,7 @@ const App: React.FC = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium">Size</label>
+            <label className="block text-sm font-medium">Egg Size</label>
             <select value={size} onChange={(e) => setSize(e.target.value as Size)} className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               <option>Small</option>
               <option>Medium</option>
@@ -100,7 +102,7 @@ const App: React.FC = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium">Hardness</label>
+            <label className="block text-sm font-medium">Yolk Type</label>
             <select value={hardness} onChange={(e) => setHardness(e.target.value as Hardness)} className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               <option>Runny</option>
               <option>Soft</option>
