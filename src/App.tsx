@@ -272,7 +272,7 @@ const App: React.FC = () => {
         </div>
       )}
       </div>
-      <div className="mt-auto py-4 flex flex-col items-center space-y-1 z-30">
+      <div className="mt-auto py-4 flex flex-col items-center space-y-1 z-30 bg-gradient-to-b from-orange-200 to-orange-300 w-full">
         <a 
           href="https://ko-fi.com/gogoi" 
           target="_blank" 
