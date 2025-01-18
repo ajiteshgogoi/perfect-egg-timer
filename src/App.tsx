@@ -90,9 +90,9 @@ const App: React.FC = () => {
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-orange-200 to-orange-300 text-orange-900">
       <h1 className="text-6xl font-bold text-center text-orange-600 mb-8">
-        <span className="inline-block transform rotate-12">🥚</span>
+        <span className="inline-block transform rotate-12 text-white">🥚</span>
         <span className="mx-4">Perfect Egg Timer</span>
-        <span className="inline-block transform -rotate-12">🐣</span>
+        <span className="inline-block transform -rotate-12 text-white">🐣</span>
       </h1>
       <button 
         onClick={() => setShowInstructions(true)}
@@ -284,7 +284,7 @@ const App: React.FC = () => {
           </svg>
           <span>Buy Me a Coffee</span>
         </a>
-        <div className="text-xs text-gray-500">© ajitesh gogoi</div>
+        <div className="text-xs text-gray-800">© ajitesh gogoi</div>
       </div>
     </>
   );
