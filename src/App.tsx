@@ -84,7 +84,7 @@ const App: React.FC = () => {
       <h1 className="text-6xl font-bold text-center text-orange-600 mb-8">
         <span className="inline-block transform rotate-12">🥚</span>
         <span className="mx-4">Perfect Egg Timer</span>
-        <span className="inline-block transform -rotate-12">🍳</span>
+        <span className="inline-block transform -rotate-12">🐣</span>
       </h1>
       <button 
         onClick={() => setShowInstructions(true)}
