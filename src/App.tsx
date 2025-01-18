@@ -141,8 +141,8 @@ const App: React.FC = () => {
             </select>
           </div>
         </div>
-        <div className="relative w-full h-20 bg-orange-100 rounded-full overflow-hidden shadow-inner">
-          <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transition-all duration-1000" style={{ width: `${(time / ((baseTimes[hardness] * 60) + (size === 'Small' ? -30 : size === 'Large' ? 30 : 0) + (temperature === 'Fridge' ? 45 : 0))) * 100}%` }}>
+        <div className="relative w-full h-16 bg-orange-100 rounded-2xl overflow-hidden shadow-inner">
+          <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl transition-all duration-1000" style={{ width: `${(time / ((baseTimes[hardness] * 60) + (size === 'Small' ? -30 : size === 'Large' ? 30 : 0) + (temperature === 'Fridge' ? 45 : 0))) * 100}%` }}>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/20 to-transparent"></div>
           </div>
         </div>
@@ -154,7 +154,7 @@ const App: React.FC = () => {
             className={`${
               isCooking 
                 ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600'
+                : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
             } text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95`}
           >
             {isCooking ? 'Cooking...' : 'Start'}
