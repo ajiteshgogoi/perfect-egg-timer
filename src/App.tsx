@@ -163,7 +163,7 @@ const App: React.FC = () => {
             className={`${
     isCooking 
       ? 'bg-gray-400 cursor-not-allowed' 
-      : 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800'
+      : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
             } text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95`}
           >
             {isCooking ? 'Cooking...' : 'Start'}
@@ -186,7 +186,7 @@ const App: React.FC = () => {
             <div className="flex justify-center space-x-4">
               <button
                 onClick={confirmBoil}
-                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95"
+                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95"
               >
                 Yes
               </button>
@@ -237,7 +237,7 @@ const App: React.FC = () => {
                   }
                   setShowAlarm(false);
                 }}
-                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95"
+                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-green-200/50 active:scale-95"
               >
                 OK
               </button>
