@@ -472,7 +472,7 @@ const App: React.FC = () => {
         </div>
       )}
         </div>
-        <div className="mt-auto mt-2 mb-2py-4 flex flex-col items-center space-y-1 z-30 w-full">
+        <div className="mt-auto mt-2 mb-2 py-4 flex flex-col items-center space-y-1 z-30 w-full">
           <a 
             href="https://ko-fi.com/gogoi" 
             target="_blank" 
