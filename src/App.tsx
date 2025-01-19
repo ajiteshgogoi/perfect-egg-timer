@@ -472,7 +472,7 @@ const App: React.FC = () => {
         </div>
       )}
         </div>
-        <div className="mt-auto mt-2 py-4 flex flex-col items-center space-y-1 z-30 w-full">
+        <div className="mt-auto mt-2 mb-2py-4 flex flex-col items-center space-y-1 z-30 w-full">
           <a 
             href="https://ko-fi.com/gogoi" 
             target="_blank" 
@@ -484,7 +484,7 @@ const App: React.FC = () => {
             </svg>
             <span>Buy Me a Coffee</span>
           </a>
-          <div className="text-xs text-gray-800">© {new Date().getFullYear()} ajitesh gogoi. All rights reserved.</div>
+          <div className="text-xs text-gray-600">© {new Date().getFullYear()} ajitesh gogoi. All rights reserved.</div>
         </div>
       </div>
     </>
