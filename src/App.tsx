@@ -484,7 +484,7 @@ const App: React.FC = () => {
             </svg>
             <span>Buy Me a Coffee</span>
           </a>
-          <div className="text-xs text-gray-800">© ajitesh gogoi</div>
+          <div className="text-xs text-gray-800">© {new Date().getFullYear()} ajitesh gogoi. All rights reserved.</div>
         </div>
       </div>
     </>
