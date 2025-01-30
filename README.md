@@ -2,7 +2,7 @@
 
 A modern Progressive Web App designed to help you cook eggs exactly to your preference. Features an elegant interface with smart timing adjustments and reliable background processing.
 
-🍳 **[Try Perfect Egg Timer](https://perfect-egg-timer.vercel.app)**
+🥚 **[Try Perfect Egg Timer](https://perfect-egg-timer.vercel.app)**
 
 ## Key Features
 
@@ -54,7 +54,7 @@ npm run build
 
 ## Support
 
-For bugs or feedback, please contact ajitesh gogoi.
+For bugs or feedback, please contact ajiteshgogoi@gmail.com.
 
 <p align="left">
   <a href="https://ko-fi.com/gogoi">
