@@ -39,19 +39,6 @@ A modern Progressive Web App designed to help you cook eggs exactly to your pref
 - State Management: React Hooks
 - Build System: Create React App
 
-## Developer Setup
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-
-# Build for production
-npm run build
-```
-
 ## Support
 
 For bugs or feedback, please contact ajiteshgogoi@gmail.com.
