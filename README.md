@@ -1,46 +1,63 @@
-# Getting Started with Create React App
+# Perfect Egg Timer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern Progressive Web App designed to help you cook eggs exactly to your preference. Features an elegant interface with smart timing adjustments and reliable background processing.
 
-## Available Scripts
+🍳 **[Try Perfect Egg Timer](https://perfect-egg-timer.vercel.app)**
 
-In the project directory, you can run:
+## Key Features
 
-### `npm start`
+- **Smart Timing**: Automatically adjusts cooking time based on egg size, temperature, and desired yolk consistency
+- **Background Processing**: Reliable timer functionality using Web Workers
+- **Audio Alerts**: Configurable sound notifications when eggs are ready
+- **Offline Support**: Works without internet as a Progressive Web App
+- **Mobile Optimized**: Responsive design that works beautifully on all devices
+- **Boiling Guide**: Clear instructions for perfect results every time
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How It Works
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. **Setup**: 
+   - Select egg temperature (room/fridge)
+   - Choose egg size (small/medium/large)
+   - Pick yolk type (runny/soft/hard)
 
-### `npm test`
+2. **Processing**:
+   - Smart timer adjusts duration based on your selections
+   - Background processing ensures reliable timing
+   - Visual progress bar shows remaining time
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **Completion**:
+   - Audio alert when eggs are ready (optional)
+   - Clear instructions for ice bath to stop cooking
+   - Perfect eggs every time!
 
-### `npm run build`
+## Technical Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Frontend: React, TypeScript, Tailwind CSS
+- Processing: Web Workers for background timing
+- PWA: Service Workers for offline support
+- Audio: Web Audio API for alerts
+- State Management: React Hooks
+- Build System: Create React App
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Developer Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Install dependencies
+npm install
 
-### `npm run eject`
+# Start development server
+npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Build for production
+npm run build
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Support
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+For bugs or feedback, please contact ajitesh gogoi.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<p align="left">
+  <a href="https://ko-fi.com/gogoi">
+    <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-Support_Development-FFDD00?style=for-the-badge&logo=ko-fi&logoColor=black" alt="Buy Me A Coffee" />
+  </a>
+</p>
