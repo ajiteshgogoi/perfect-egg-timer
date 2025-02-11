@@ -344,6 +344,13 @@ const App: React.FC = () => {
         </div>
       </div>
 
+      <button
+        onClick={() => setShowInstallInstructions(true)}
+        className="text-orange-600 hover:text-orange-700 font-semibold text-sm transition-all duration-300 flex items-center space-x-1 mt-4"
+      >
+        <span>Install the App</span>
+      </button>
+
       {showBoilConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
           <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 border-2 border-orange-200">
@@ -507,13 +514,7 @@ const App: React.FC = () => {
   </div>
 )}
 
-<div className="mt-8 mb-2 py-4 flex flex-col items-center space-y-2 z-30 w-full">
-  <button
-    onClick={() => setShowInstallInstructions(true)}
-    className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded-2xl transition-all duration-300 active:scale-95 flex items-center space-x-2 text-sm hover:shadow-[0_4px_12px_rgba(168,85,247,0.2)]"
-  >
-    <span>📱 Install the App</span>
-  </button>
+<div className="mt-4 py-2 flex flex-col items-center space-y-2 z-30 w-full">
           <a 
             href="https://ko-fi.com/gogoi" 
             target="_blank" 
