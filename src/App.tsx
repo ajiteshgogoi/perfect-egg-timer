@@ -17,6 +17,7 @@ const App: React.FC = () => {
 
   const [isCooking, setIsCooking] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [showInstallInstructions, setShowInstallInstructions] = useState(false);
   const [showBoilConfirm, setShowBoilConfirm] = useState(false);
   const [showBoilWarning, setShowBoilWarning] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
@@ -472,7 +473,47 @@ const App: React.FC = () => {
         </div>
       )}
         </div>
+{showInstallInstructions && (
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-40">
+    <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 w-full max-w-[48rem] space-y-4 border-2 border-orange-200">
+      <h2 className="text-xl font-bold text-orange-800 mb-4">How to Install:</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-orange-700">iOS:</h3>
+          <ol className="list-decimal list-inside space-y-2 text-orange-700">
+            <li>On Safari, tap the Share button</li>
+            <li>Select Add to Home Screen</li>
+            <li>Tap Add to install</li>
+          </ol>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-orange-700">Android:</h3>
+          <ol className="list-decimal list-inside space-y-2 text-orange-700">
+            <li>Tap the install prompt when it appears, or</li>
+            <li>Open menu (3 dots) and select</li>
+            <li>Install app or Add to Home screen</li>
+          </ol>
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <button
+          onClick={() => setShowInstallInstructions(false)}
+          className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-2 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-gray-200/50 active:scale-95 mt-4"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 <div className="mt-8 mb-2 py-4 flex flex-col items-center space-y-2 z-30 w-full">
+  <button
+    onClick={() => setShowInstallInstructions(true)}
+    className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded-2xl transition-all duration-300 active:scale-95 flex items-center space-x-2 text-sm hover:shadow-[0_4px_12px_rgba(168,85,247,0.2)]"
+  >
+    <span>📱 Install the App</span>
+  </button>
           <a 
             href="https://ko-fi.com/gogoi" 
             target="_blank" 
