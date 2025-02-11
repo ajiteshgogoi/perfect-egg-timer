@@ -481,9 +481,9 @@ const App: React.FC = () => {
         <div className="space-y-2">
           <h3 className="text-lg font-semibold text-orange-700">iOS:</h3>
           <ol className="list-decimal list-inside space-y-2 text-orange-700">
-            <li>On Safari, tap the Share button</li>
-            <li>Select Add to Home Screen</li>
-            <li>Tap Add to install</li>
+            <li>On Safari, tap the 'Share' button</li>
+            <li>Select 'Add to Home Screen'</li>
+            <li>Tap 'Add' to install</li>
           </ol>
         </div>
         <div className="space-y-2">
