@@ -490,8 +490,8 @@ const App: React.FC = () => {
           <h3 className="text-lg font-semibold text-orange-700">Android:</h3>
           <ol className="list-decimal list-inside space-y-2 text-orange-700">
             <li>Tap the install prompt when it appears, or</li>
-            <li>Open menu (3 dots) and select</li>
-            <li>Install app or Add to Home screen</li>
+            <li>Open menu (3 dots on top right corner)</li>
+            <li>Select 'Install app' or 'Add to Home screen'</li>
           </ol>
         </div>
       </div>
