@@ -346,7 +346,7 @@ const App: React.FC = () => {
 
       <button
         onClick={() => setShowInstallInstructions(true)}
-        className="text-orange-600 hover:text-orange-700 font-semibold text-sm transition-all duration-300 flex items-center space-x-1 mt-4"
+        className="text-orange-600 hover:text-orange-700 font-semibold text-sm transition-all duration-300 flex items-center space-x-1 mt-10"
       >
         <span>Install the App</span>
       </button>
